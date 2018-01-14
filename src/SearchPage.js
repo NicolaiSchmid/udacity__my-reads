@@ -36,8 +36,6 @@ export default class SearchPage extends Component {
                 books: [],
             })
         }
-
-        console.log(this.state.books);
     }
 
     updateBook = async (book, shelf) => {
