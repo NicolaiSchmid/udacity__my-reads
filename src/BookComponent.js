@@ -10,7 +10,7 @@ export default class BookComponent extends Component {
 
 
     render() {
-        console.log(this.props.meta);
+        console.log(this.props);
         return (
             <div className="book">
                 <div className="book-top">
@@ -20,20 +20,13 @@ export default class BookComponent extends Component {
                         </a>
                     )}
                     <div className="book-shelf-changer">
-                        <select defaultValue="moveTo" onInput={(event) => this.moveTo(event.target.value)}>
+                        <select defaultValue={this.props.meta.shelf || 'moveTo'} onInput={(event) => this.moveTo(event.target.value)}>
                             <option value="moveTo" disabled>Move to...</option>
-                            {this.props.category !== 'currentlyReading' && (
-                                <option value="currentlyReading">Currently Reading</option>
-                            )}
-                            {this.props.category !== 'wantToRead' && (
-                                <option value="wantToRead">Want to Read</option>
-                            )}
-                            {this.props.category !== 'read' && (
-                                <option value="read">Read</option>
-                            )}
-                            {this.props.category !== 'search' && (
-                                <option value="none">None</option>
-                            )}
+                            <option value="currentlyReading">Currently Reading</option>
+                            <option value="wantToRead">Want to Read</option>
+                            <option value="read">Read</option>
+                            
+                            <option value="none">None</option>
                         </select>
                     </div>
                 </div>

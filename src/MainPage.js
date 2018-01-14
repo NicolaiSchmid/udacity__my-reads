@@ -59,8 +59,6 @@ export default class MainPage extends Component {
                                         return (
                                             <li key={book.id}>
                                                 <BookComponent
-                                                    category='currentlyReading'
-
                                                     meta={book}
 
                                                     update={this.updateBook}
