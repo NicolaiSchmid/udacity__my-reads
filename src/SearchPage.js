@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import BookComponent from './BookComponent';
 
 import * as BooksAPI from './BooksAPI';
+import { search } from './BooksAPI';
 
 export default class SearchPage extends Component {
 
@@ -19,9 +20,15 @@ export default class SearchPage extends Component {
 
         try {
 
-            const results = await BooksAPI.search(query);
+            let searchResults = await BooksAPI.search(query);
+
+            // Get shelf data
+            searchResults = await Promise.all(searchResults.map(async(book) => {
+                return await BooksAPI.get(book.id);
+            }));
+
             this.setState({
-                books: results,
+                books: searchResults,
             });
         } catch(error) {
             // Clear books on search error
@@ -29,6 +36,8 @@ export default class SearchPage extends Component {
                 books: [],
             })
         }
+
+        console.log(this.state.books);
     }
 
     updateBook = async (book, shelf) => {
@@ -59,7 +68,7 @@ export default class SearchPage extends Component {
                             return (
                                 <li key={book.id}>
                                     <BookComponent
-                                        category='search'
+                                        category={book.shelf}
 
                                         meta={book}
 
