@@ -17,11 +17,17 @@ export default class SearchPage extends Component {
             query: query.trim(),
         });
 
-        if (!this.state.query) {
+        try {
+
             const results = await BooksAPI.search(query);
             this.setState({
                 books: results,
             });
+        } catch(error) {
+            // Clear books on search error
+            this.setState({
+                books: [],
+            })
         }
     }
 
